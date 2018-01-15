@@ -44,6 +44,14 @@ module.exports = function(grunt) {
                 'test/*.js',
                 'test/*/*.js'
             ]
+        },
+
+        // Vows Configuration
+        vows: {
+            all: {
+                options: {reporter: 'spec'},
+                src: ['test/*.js', 'test/*/*.js']
+            }
         }
     });
 
@@ -51,5 +59,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-vows');
 
+    // Tasks
+    grunt.registerTask('test', ['jshint', 'concat', 'vows']);
+    grunt.registerTask('build', ['jshint', 'vows', 'concat', 'uglify']);
+    grunt.registerTask('default', ['build']);
 };
